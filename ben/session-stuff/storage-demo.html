@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storage Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .save-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .load-btn {
+            background-color: #2196F3;
+            color: white;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        .success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Storage Demo</h1>
+        <div class="input-group">
+            <label for="localText">Local Storage Text:</label>
+            <input type="text" id="localText" placeholder="This will be saved in local storage">
+        </div>
+        <div class="input-group">
+            <label for="sessionText">Session Storage Text:</label>
+            <input type="text" id="sessionText" placeholder="This will be saved in session storage">
+        </div>
+        <div class="button-group">
+            <button class="save-btn" onclick="saveToStorage()">Save to Storage</button>
+            <button class="load-btn" onclick="loadFromStorage()">Load from Storage</button>
+        </div>
+        <div id="status" class="status"></div>
+    </div>
+
+    <script>
+        function showStatus(message) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = 'status success';
+            status.style.display = 'block';
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        function saveToStorage() {
+            const localText = document.getElementById('localText').value;
+            const sessionText = document.getElementById('sessionText').value;
+            
+            localStorage.setItem('storedLocalText', localText);
+            sessionStorage.setItem('storedSessionText', sessionText);
+            
+            showStatus('Values successfully saved to storage!');
+        }
+
+        function loadFromStorage() {
+            const localText = localStorage.getItem('storedLocalText') || '';
+            const sessionText = sessionStorage.getItem('storedSessionText') || '';
+            
+            document.getElementById('localText').value = localText;
+            document.getElementById('sessionText').value = sessionText;
+            
+            showStatus('Values loaded from storage!');
+        }
+
+        // Load any existing values when the page loads
+        window.addEventListener('load', loadFromStorage);
+    </script>
+</body>
+</html> 
